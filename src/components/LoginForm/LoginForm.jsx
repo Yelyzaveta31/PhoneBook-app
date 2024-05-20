@@ -1,7 +1,19 @@
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginThunk } from "../../redux/auth/operations";
+import * as Yup from "yup";
+import s from "./LoginForm.module.css";
+
+const FeedbackSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Please, add your valid email!")
+    .required("Please, add your email"),
+  password: Yup.string()
+    .min(7, "Too Short!")
+    .max(18, "Too Long!")
+    .required("Please, add your password"),
+});
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -13,57 +25,46 @@ export const LoginForm = () => {
     dispatch(loginThunk(values));
   };
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={FeedbackSchema}
+    >
+      <Form className={s.form}>
+        <div className={s.wrapper}>
+          <label className={s.label}>
+            <span className={s.labelText}>Email</span>
+          </label>
+          <Field
+            type="email"
+            name="email"
+            placeholder="email"
+            className="input input-bordered"
+            required
+          />
+          <ErrorMessage className={s.error} name="email" component="span" />
         </div>
-        <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-            <Form className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <Field
-                  type="email"
-                  name="email"
-                  placeholder="email"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <Field
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  required
-                />
-                <label className="label text-sm">
-                  <Link to="/register">
-                    Do not have account? Lets create it!
-                  </Link>
-                </label>
-              </div>
-              <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">
-                  Login
-                </button>
-              </div>
-            </Form>
-          </Formik>
+        <div className={s.wrapper}>
+          <label className={s.label}>
+            <span className={s.labelText}>Password</span>
+          </label>
+          <Field
+            type="password"
+            name="password"
+            placeholder="password"
+            className={s.input}
+            required
+          />
+          <label className={s.login}>
+            <Link to="/register">Do not have account? Lets create it!</Link>
+          </label>
         </div>
-      </div>
-    </div>
+        <div>
+          <button type="submit" className={s.btn}>
+            Login
+          </button>
+        </div>
+      </Form>
+    </Formik>
   );
 };

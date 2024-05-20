@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import { fetchContactsThunk } from "./redux/contacts/contactsOps";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,7 +19,14 @@ function App() {
   }, [dispatch]);
   return (
     <Routes>
-      <Route path="/" element={<PrivateRoute>{/* <Layout /> */}</PrivateRoute>}>
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }
+      >
         <Route index element={<HomePage />} />
         <Route path="contacts" element={<ContactsPage />} />
       </Route>
@@ -26,8 +34,7 @@ function App() {
         path="register"
         element={
           <PublicRoute>
-            {" "}
-            <RegistrationPage />{" "}
+            <RegistrationPage />
           </PublicRoute>
         }
       />
@@ -35,7 +42,6 @@ function App() {
         path="login"
         element={
           <PublicRoute>
-            {" "}
             <LoginPage />
           </PublicRoute>
         }

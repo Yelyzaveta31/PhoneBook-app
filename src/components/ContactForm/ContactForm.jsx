@@ -10,7 +10,7 @@ import {
 } from "../../redux/contacts/contactsOps";
 import { selectIsLoading } from "../../redux/contacts/contactsSlice";
 
-const FeedbackSchema = Yup.object().shape({
+const ContactsSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Too Short!")
     .max(50, "Too Long!")
@@ -44,7 +44,7 @@ const ContactForm = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={FeedbackSchema}
+        validationSchema={ContactsSchema}
       >
         <Form className={s.form}>
           <label className={s.form_list} htmlFor="name">

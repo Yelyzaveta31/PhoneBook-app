@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
-import AuthNav from "../AuthNav/AuthNav";
+import AppBar from "../AppBar/AppBar";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
     <div>
-      <AuthNav />
+      <AppBar />
       <Outlet />
+      {children}
     </div>
   );
 };
