@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  fetchContactsThunk,
   addContactsThunk,
   deleteContactsThunk,
-} from "./contactsOps.js";
+  fetchContactsThunk,
+} from "./contactsOps";
 
 const initialState = {
   items: [],
@@ -14,11 +14,7 @@ const initialState = {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState,
-  selectors: {
-    selectContacts: (state) => state.items,
-    selectIsLoading: (state) => state.isLoading,
-    selectIsError: (state) => state.isError,
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchContactsThunk.fulfilled, (state, { payload }) => {
@@ -28,29 +24,34 @@ const contactsSlice = createSlice({
         state.items = [...state.items, payload];
       })
       .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
-        state.items = state.items.filter((item) => item.id !== payload.id);
+        state.items = state.items.filter((item) => item.id !== payload);
       })
       .addMatcher(
         ({ type }) => type.endsWith("/pending"),
         (state) => {
-          (state.isLoading = true), (state.error = null);
+          state.isLoading = true;
+          state.error = null;
         }
       )
       .addMatcher(
         ({ type }) => type.endsWith("/fulfilled"),
         (state) => {
-          (state.isLoading = false), (state.error = null);
+          state.isLoading = false;
+          state.error = null;
         }
       )
       .addMatcher(
         ({ type }) => type.endsWith("/rejected"),
-        (state, { error }) => {
-          (state.isLoading = false), (state.error = error);
+        (state, { payload }) => {
+          state.isLoading = false;
+          state.error = payload;
         }
       );
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
-export const { selectContacts, selectIsLoading, selectIsError } =
-  contactsSlice.selectors;
+
+export const selectContacts = (state) => state.contacts.items;
+export const selectIsLoading = (state) => state.contacts.isLoading;
+export const selectIsError = (state) => state.contacts.error;

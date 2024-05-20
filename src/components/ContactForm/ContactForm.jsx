@@ -3,9 +3,12 @@ import s from "./ContactForm.module.css";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addContactsThunk, fetchContactsThunk } from "../../redux/contactsOps";
-import { selectIsLoading } from "../../redux/contactsSlice";
 import Loader from "../Loader/Loader";
+import {
+  addContactsThunk,
+  fetchContactsThunk,
+} from "../../redux/contacts/contactsOps";
+import { selectIsLoading } from "../../redux/contacts/contactsSlice";
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string()

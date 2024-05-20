@@ -1,9 +1,15 @@
 import { useDispatch } from "react-redux";
-import ContactForm from "./components/ContactForm/ContactForm";
-import ContactList from "./components/ContactList/ContactList";
-import SearchBox from "./components/SearchBox/SearchBox";
 import { useEffect } from "react";
-import { fetchContactsThunk } from "./redux/contactsOps";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage/HomePage";
+import ContactsPage from "./pages/ContactsPage/ContactsPage";
+import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import NotFound from "./pages/NotFound/NotFound";
+import PublicRoute from "./routes/PublicRoute";
+import PrivateRoute from "./routes/PrivateRoute";
+import { fetchContactsThunk } from "./redux/contacts/contactsOps";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -11,14 +17,31 @@ function App() {
     dispatch(fetchContactsThunk());
   }, [dispatch]);
   return (
-    <div>
-      <h1 style={{ marginLeft: "40px", fontSize: "40px", fontWeight: "bold" }}>
-        Phonebook
-      </h1>
-      <ContactForm />
-      <SearchBox />
-      <ContactList />
-    </div>
+    <Routes>
+      <Route path="/" element={<PrivateRoute>{/* <Layout /> */}</PrivateRoute>}>
+        <Route index element={<HomePage />} />
+        <Route path="contacts" element={<ContactsPage />} />
+      </Route>
+      <Route
+        path="register"
+        element={
+          <PublicRoute>
+            {" "}
+            <RegistrationPage />{" "}
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="login"
+        element={
+          <PublicRoute>
+            {" "}
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
