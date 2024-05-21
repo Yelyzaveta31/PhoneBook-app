@@ -1,5 +1,16 @@
 .form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: auto;
+  padding: 20px;
+  border: 1px solid #fff176;
+  border-radius: 20px;
+  background-color: #ffffff6c;
+  box-shadow: 0 0 10px #0000001a;
+  gap: 15px;
 }
+
 .wrapper {
 }
 label {

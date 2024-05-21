@@ -18,36 +18,21 @@ function App() {
     dispatch(fetchContactsThunk());
   }, [dispatch]);
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <Layout />
-          </PrivateRoute>
-        }
-      >
-        <Route index element={<HomePage />} />
-        <Route path="contacts" element={<ContactsPage />} />
-      </Route>
-      <Route
-        path="register"
-        element={
-          <PublicRoute>
-            <RegistrationPage />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="login"
-        element={
-          <PublicRoute>
-            <LoginPage />
-          </PublicRoute>
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/contacts"
+          element={<PrivateRoute component={ContactsPage} />}
+        />
+        <Route
+          path="/register"
+          element={<PublicRoute component={RegistrationPage} />}
+        />
+        <Route path="/login" element={<PublicRoute component={LoginPage} />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Layout>
   );
 }
 
