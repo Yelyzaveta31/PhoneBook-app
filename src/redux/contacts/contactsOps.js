@@ -6,7 +6,6 @@ export const fetchContactsThunk = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       const { data } = await goitApi.get("/contacts");
-
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -19,7 +18,6 @@ export const deleteContactsThunk = createAsyncThunk(
   async (id, thunkApi) => {
     try {
       const { data } = await goitApi.delete(`/contacts/${id}`);
-
       return data.id;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -32,7 +30,18 @@ export const addContactsThunk = createAsyncThunk(
   async (body, thunkApi) => {
     try {
       const { data } = await goitApi.post("/contacts", body);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 
+export const editContactsThunk = createAsyncThunk(
+  "contacts/Edit",
+  async (body, thunkApi) => {
+    try {
+      const { data } = await goitApi.patch(`/contacts/${body.id}`);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);

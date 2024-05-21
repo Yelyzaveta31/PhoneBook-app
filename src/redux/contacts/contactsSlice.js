@@ -1,57 +1,77 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   addContactsThunk,
   deleteContactsThunk,
+  editContactsThunk,
   fetchContactsThunk,
 } from "./contactsOps";
+import { logoutThunk } from "../auth/operations";
 
 const initialState = {
   items: [],
   isLoading: false,
-  error: null,
+  isError: false,
 };
 
 const contactsSlice = createSlice({
   name: "contacts",
   initialState,
-  reducers: {},
+  selectors: {
+    selectContacts: (state) => state.items,
+    selectIsLoading: (state) => state.isLoading,
+    selectIsError: (state) => state.isError,
+  },
   extraReducers: (builder) => {
     builder
+
       .addCase(fetchContactsThunk.fulfilled, (state, { payload }) => {
         state.items = payload;
+        state.isLoading = false;
       })
-      .addCase(addContactsThunk.fulfilled, (state, { payload }) => {
-        state.items = [...state.items, payload];
-      })
+
       .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
         state.items = state.items.filter((item) => item.id !== payload);
+        state.isLoading = false;
       })
+
+      .addCase(addContactsThunk.fulfilled, (state, { payload }) => {
+        state.items.push(payload);
+        state.isLoading = false;
+      })
+      .addCase(editContactsThunk.fulfilled, (state, { payload }) => {
+        const item = state.items.find((item) => item.id === payload.id);
+        item.name = payload.name;
+        item.number = payload.number;
+      })
+      .addCase(logoutThunk.fulfilled, () => {
+        return initialState;
+      })
+
       .addMatcher(
-        ({ type }) => type.endsWith("/pending"),
+        isAnyOf(
+          fetchContactsThunk.pending,
+          deleteContactsThunk.pending,
+          addContactsThunk.pending
+        ),
         (state) => {
           state.isLoading = true;
-          state.error = null;
+          state.isError = false;
         }
       )
       .addMatcher(
-        ({ type }) => type.endsWith("/fulfilled"),
-        (state) => {
-          state.isLoading = false;
-          state.error = null;
-        }
-      )
-      .addMatcher(
-        ({ type }) => type.endsWith("/rejected"),
+        isAnyOf(
+          fetchContactsThunk.rejected,
+          deleteContactsThunk.rejected,
+          addContactsThunk.rejected
+        ),
         (state, { payload }) => {
+          state.isError = payload;
           state.isLoading = false;
-          state.error = payload;
         }
       );
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
-
-export const selectContacts = (state) => state.contacts.items;
-export const selectIsLoading = (state) => state.contacts.isLoading;
-export const selectIsError = (state) => state.contacts.error;
+export const { selectContacts, selectIsLoading, selectIsError } =
+  contactsSlice.selectors;

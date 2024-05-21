@@ -1,4 +1,5 @@
 .form {
+  width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,9 +12,42 @@
   gap: 15px;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.btn {
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+  font-size: 16px;
+  color: violet;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .wrapper {
+  display: flex;
+  flex-direction: column;
 }
-label {
+.login {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
-.labelText {
+
+.input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+.error {
+  color: red;
+  font-size: 12px;
 }

@@ -10,7 +10,7 @@ const Navigation = () => {
     return clsx(s.link, isActive && s.active);
   };
   return (
-    <nav className={s.container}>
+    <nav className={s.nav}>
       <NavLink to="/" className={activeClass}>
         Home
       </NavLink>

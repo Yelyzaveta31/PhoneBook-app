@@ -1,21 +1,23 @@
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { registerThunk } from "../../redux/auth/operations";
+import * as Yup from "yup";
 import s from "./RegistrationForm.module.css";
 import { useId } from "react";
-import * as Yup from "yup";
-import { ErrorMessage } from "formik";
-import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { registerThunk } from "../../redux/auth/operations";
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
+  const nameFieldId = useId();
+  const emailFieldId = useId();
+  const passwordFieldId = useId();
 
   const FeedbackSchema = Yup.object().shape({
     name: Yup.string()
       .min(3, "Too Short!")
       .max(50, "Too Long!")
       .required("Please, add your name"),
-    mail: Yup.string()
+    email: Yup.string()
       .email("Please, add your valid email!")
       .required("Please, add your email"),
     password: Yup.string()
@@ -24,27 +26,18 @@ const RegistrationForm = () => {
       .required("Please, add your password"),
   });
 
-  const initialValues = {
-    name: "",
-    email: "",
-    password: "",
-  };
-
-  const nameFieldId = useId();
-  const emailFieldId = useId();
-  const passwordFieldId = useId();
   const handleSubmit = (values, actions) => {
     dispatch(registerThunk(values));
-
     actions.resetForm();
   };
+
   return (
-    <div className={s.container}>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={FeedbackSchema}
-      >
+    <Formik
+      initialValues={{ name: "", email: "", password: "" }}
+      onSubmit={handleSubmit}
+      validationSchema={FeedbackSchema}
+    >
+      <div className={s.container}>
         <Form className={s.form}>
           <div className={s.wrapper}>
             <label htmlFor={nameFieldId}>Username</label>
@@ -52,7 +45,8 @@ const RegistrationForm = () => {
               className={s.input}
               type="text"
               name="name"
-              id={nameFieldId}
+              id="name"
+              autoComplete="username"
             />
             <ErrorMessage className={s.error} name="name" component="span" />
           </div>
@@ -62,7 +56,8 @@ const RegistrationForm = () => {
               className={s.input}
               type="email"
               name="email"
-              id={emailFieldId}
+              id="email"
+              autoComplete="email"
             />
             <ErrorMessage className={s.error} name="email" component="span" />
           </div>
@@ -70,9 +65,10 @@ const RegistrationForm = () => {
             <label htmlFor={passwordFieldId}>Password</label>
             <Field
               className={s.input}
-              type="text"
+              type="password"
               name="password"
-              id={passwordFieldId}
+              id="password"
+              autoComplete="current-password"
             />
             <ErrorMessage
               className={s.error}
@@ -81,7 +77,7 @@ const RegistrationForm = () => {
             />
           </div>
           <div className={s.login}>
-            <p>Already have an account? </p>
+            <p>Do you already have an account? </p>
             <NavLink className={s.link} to="/login">
               Log in
             </NavLink>
@@ -90,8 +86,9 @@ const RegistrationForm = () => {
             Register
           </button>
         </Form>
-      </Formik>
-    </div>
+      </div>
+    </Formik>
   );
 };
+
 export default RegistrationForm;

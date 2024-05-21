@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
@@ -8,28 +8,49 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import NotFound from "./pages/NotFound/NotFound";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
-import { fetchContactsThunk } from "./redux/contacts/contactsOps";
 import Layout from "./components/Layout/Layout";
+import { refreshThunk } from "./redux/auth/operations";
+import { selectIsRefreshing } from "./redux/auth/slice";
+import { Refresher } from "./components/Refresher/Refresher";
 
 function App() {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContactsThunk());
+    dispatch(refreshThunk());
   }, [dispatch]);
-  return (
+  return isRefreshing ? (
+    <Refresher />
+  ) : (
     <Layout>
       <Routes>
-        <Route path="/" element={<HomePage />} />
         <Route
-          path="/contacts"
-          element={<PrivateRoute component={ContactsPage} />}
+          path="/"
+          element={
+            <PrivateRoute>
+              <Layout />
+            </PrivateRoute>
+          }
         />
         <Route
           path="/register"
-          element={<PublicRoute component={RegistrationPage} />}
+          element={
+            <PublicRoute>
+              <RegistrationPage />
+            </PublicRoute>
+          }
         />
-        <Route path="/login" element={<PublicRoute component={LoginPage} />} />
+        <Route index element={<HomePage />} />
+        <Route path="/contacts" element={<ContactsPage />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
