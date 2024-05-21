@@ -1,11 +1,11 @@
-import { FaUser } from "react-icons/fa6";
-import { FaPhoneAlt } from "react-icons/fa";
-import s from "./Contact.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { FaUser } from 'react-icons/fa6';
+import { FaPhoneAlt } from 'react-icons/fa';
+import s from './Contact.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Loader from "../Loader/Loader";
-import { deleteContactsThunk } from "../../redux/contacts/contactsOps";
-import { selectIsLoading } from "../../redux/contacts/contactsSlice";
+import Loader from '../Loader/Loader';
+import { deleteContactsThunk } from '../../redux/contacts/operations';
+import { selectIsLoading } from '../../redux/contacts/slice';
 
 export const Contact = ({ item }) => {
   const dispatch = useDispatch();

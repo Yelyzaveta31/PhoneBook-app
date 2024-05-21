@@ -1,7 +1,7 @@
-import { useDispatch } from "react-redux";
-import s from "./SearchBox.module.css";
-import { useId } from "react";
-import { changeFilter } from "../../redux/filters/filtersSlice";
+import { useDispatch } from 'react-redux';
+import s from './SearchBox.module.css';
+import { useId } from 'react';
+import { changeFilter } from '../../redux/filters/slice';
 
 const SearchBox = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const SearchBox = () => {
         className={s.boxInput}
         placeholder="Search contacts..."
         type="search"
-        onChange={(e) => {
+        onChange={e => {
           dispatch(changeFilter(e.target.value));
         }}
         id={filterId}

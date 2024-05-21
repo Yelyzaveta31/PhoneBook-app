@@ -1,11 +1,11 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   addContactsThunk,
   deleteContactsThunk,
   editContactsThunk,
   fetchContactsThunk,
-} from "./contactsOps";
-import { logoutThunk } from "../auth/operations";
+} from './operations';
+import { logoutThunk } from '../auth/operations';
 
 const initialState = {
   items: [],
@@ -14,14 +14,14 @@ const initialState = {
 };
 
 const contactsSlice = createSlice({
-  name: "contacts",
+  name: 'contacts',
   initialState,
   selectors: {
-    selectContacts: (state) => state.items,
-    selectIsLoading: (state) => state.isLoading,
-    selectIsError: (state) => state.isError,
+    selectContacts: state => state.items,
+    selectIsLoading: state => state.isLoading,
+    selectIsError: state => state.isError,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
 
       .addCase(fetchContactsThunk.fulfilled, (state, { payload }) => {
@@ -30,7 +30,7 @@ const contactsSlice = createSlice({
       })
 
       .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
-        state.items = state.items.filter((item) => item.id !== payload);
+        state.items = state.items.filter(item => item.id !== payload);
         state.isLoading = false;
       })
 
@@ -39,7 +39,7 @@ const contactsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(editContactsThunk.fulfilled, (state, { payload }) => {
-        const item = state.items.find((item) => item.id === payload.id);
+        const item = state.items.find(item => item.id === payload.id);
         item.name = payload.name;
         item.number = payload.number;
       })
@@ -53,7 +53,7 @@ const contactsSlice = createSlice({
           deleteContactsThunk.pending,
           addContactsThunk.pending
         ),
-        (state) => {
+        state => {
           state.isLoading = true;
           state.isError = false;
         }

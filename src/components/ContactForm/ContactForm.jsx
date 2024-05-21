@@ -1,28 +1,28 @@
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import s from "./ContactForm.module.css";
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { useEffect, useId } from "react";
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import s from './ContactForm.module.css';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { useEffect, useId } from 'react';
 import {
   addContactsThunk,
   fetchContactsThunk,
-} from "../../redux/contacts/contactsOps";
+} from '../../redux/contacts/operations';
 const ContactForm = () => {
   const dispatch = useDispatch();
   const initialValues = {
-    name: "",
-    number: "",
+    name: '',
+    number: '',
   };
 
   const ContactsSchema = Yup.object().shape({
     name: Yup.string()
-      .min(3, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please, add your name"),
+      .min(3, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Please, add your name'),
     number: Yup.string()
-      .min(7, "Too Short!")
-      .max(15, "Too Long!")
-      .required("Please, add your phone"),
+      .min(7, 'Too Short!')
+      .max(15, 'Too Long!')
+      .required('Please, add your phone'),
   });
 
   useEffect(() => {
