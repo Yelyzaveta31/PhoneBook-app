@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #e3e3e3;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.container:hover {
+  background-color: #e9ecef;
+}
+
+.deleteButton {
+  padding: 5px 10px;
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.input {
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}

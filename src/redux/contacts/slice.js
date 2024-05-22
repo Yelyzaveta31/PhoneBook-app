@@ -6,6 +6,7 @@ import {
   fetchContactsThunk,
 } from './operations';
 import { logoutThunk } from '../auth/operations';
+import toast from 'react-hot-toast';
 
 const initialState = {
   items: [],
@@ -30,6 +31,10 @@ const contactsSlice = createSlice({
       })
 
       .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
+        const deletedItem = state.items.find(item => item.id === payload);
+        if (deletedItem) {
+          toast.error(`${deletedItem.name} Contact was deleted`);
+        }
         state.items = state.items.filter(item => item.id !== payload);
         state.isLoading = false;
       })
@@ -37,9 +42,11 @@ const contactsSlice = createSlice({
       .addCase(addContactsThunk.fulfilled, (state, { payload }) => {
         state.items.push(payload);
         state.isLoading = false;
+        toast.success(`${payload.name} Contact was added`);
       })
       .addCase(editContactsThunk.fulfilled, (state, { payload }) => {
         const item = state.items.find(item => item.id === payload.id);
+
         item.name = payload.name;
         item.number = payload.number;
       })

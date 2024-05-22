@@ -2,13 +2,12 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import s from './ContactForm.module.css';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { useEffect, useId } from 'react';
-import {
-  addContactsThunk,
-  fetchContactsThunk,
-} from '../../redux/contacts/operations';
+import { useId } from 'react';
+import { addContactsThunk } from '../../redux/contacts/operations';
+
 const ContactForm = () => {
   const dispatch = useDispatch();
+
   const initialValues = {
     name: '',
     number: '',
@@ -24,10 +23,6 @@ const ContactForm = () => {
       .max(15, 'Too Long!')
       .required('Please, add your phone'),
   });
-
-  useEffect(() => {
-    dispatch(fetchContactsThunk());
-  }, [dispatch]);
 
   const handleSubmit = (values, actions) => {
     dispatch(addContactsThunk(values));

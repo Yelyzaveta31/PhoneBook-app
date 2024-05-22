@@ -1,11 +1,11 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import goitApi from "../../config/goitApi";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import goitApi from '../../config/goitApi';
 
 export const fetchContactsThunk = createAsyncThunk(
-  "contacts/fetchAll",
+  'contacts/fetchAll',
   async (_, thunkApi) => {
     try {
-      const { data } = await goitApi.get("/contacts");
+      const { data } = await goitApi.get('contacts');
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -14,10 +14,11 @@ export const fetchContactsThunk = createAsyncThunk(
 );
 
 export const deleteContactsThunk = createAsyncThunk(
-  "contacts/Delete",
+  'contacts/Delete',
   async (id, thunkApi) => {
     try {
-      const { data } = await goitApi.delete(`/contacts/${id}`);
+      const { data } = await goitApi.delete(`contacts/${id}`);
+
       return data.id;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -26,10 +27,11 @@ export const deleteContactsThunk = createAsyncThunk(
 );
 
 export const addContactsThunk = createAsyncThunk(
-  "contacts/Add",
+  'contacts/Add',
   async (body, thunkApi) => {
     try {
-      const { data } = await goitApi.post("/contacts", body);
+      const { data } = await goitApi.post('contacts', body);
+
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -38,10 +40,11 @@ export const addContactsThunk = createAsyncThunk(
 );
 
 export const editContactsThunk = createAsyncThunk(
-  "contacts/Edit",
+  'contacts/Edit',
   async (body, thunkApi) => {
     try {
-      const { data } = await goitApi.patch(`/contacts/${body.id}`);
+      console.log(body);
+      const { data } = await goitApi.patch(`contacts/${body.id}`, body);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
