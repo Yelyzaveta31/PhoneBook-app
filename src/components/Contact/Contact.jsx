@@ -4,7 +4,7 @@ import s from './Contact.module.css';
 import { useDispatch } from 'react-redux';
 import { deleteContactsThunk } from '../../redux/contacts/operations';
 
-export const Contact = ({ openElement, item }) => {
+export const Contact = ({ item }) => {
   const dispatch = useDispatch();
 
   return (
@@ -19,21 +19,12 @@ export const Contact = ({ openElement, item }) => {
           <span className={s.contact_span}>{item.number}</span>
         </p>
       </div>
-      <div className={s.btnWrapper}>
-        <button
-          className={s.button}
-          onClick={() => dispatch(deleteContactsThunk(item.id))}
-        >
-          Delete
-        </button>
-        <button
-          type="button"
-          className={s.button}
-          onClick={() => openElement(item)}
-        >
-          Edit
-        </button>
-      </div>
+      <button
+        className={s.button}
+        onClick={() => dispatch(deleteContactsThunk(item.id))}
+      >
+        Delete
+      </button>
     </div>
   );
 };

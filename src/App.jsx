@@ -5,13 +5,13 @@ import HomePage from './pages/HomePage/HomePage';
 import ContactsPage from './pages/ContactsPage/ContactsPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import NotFound from './pages/NotFound/NotFound';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import Layout from './components/Layout/Layout';
 import { refreshThunk } from './redux/auth/operations';
 import { selectIsRefreshing } from './redux/auth/slice';
 import { Refresher } from './components/Refresher/Refresher';
+import NotFound from './pages/NotFound/NotFound';
 
 function App() {
   const dispatch = useDispatch();

@@ -17,11 +17,11 @@ const ContactForm = () => {
     name: Yup.string()
       .min(3, 'Too Short!')
       .max(50, 'Too Long!')
-      .required('Please, add your name'),
+      .required('Please, add name'),
     number: Yup.string()
       .min(7, 'Too Short!')
       .max(15, 'Too Long!')
-      .required('Please, add your phone'),
+      .required('Please, add phone'),
   });
 
   const handleSubmit = (values, actions) => {
