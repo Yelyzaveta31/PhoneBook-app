@@ -6,7 +6,6 @@
   padding: 12px 20px;
   margin: 0 10px;
   text-decoration: none;
-  color: var(--white-text-color);
   font-weight: bold;
   border-radius: 8px;
   background: var(--dark-grey-color);
@@ -17,7 +16,7 @@
 }
 .link::after,
 .button::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

@@ -1,29 +1,28 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { registerThunk } from "../../redux/auth/operations";
-import * as Yup from "yup";
-import s from "./RegistrationForm.module.css";
-import { useId } from "react";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { registerThunk } from '../../redux/auth/operations';
+import * as Yup from 'yup';
+import s from './RegistrationForm.module.css';
+import { useId } from 'react';
 
 const RegistrationForm = () => {
-  const dispatch = useDispatch();
   const nameFieldId = useId();
   const emailFieldId = useId();
   const passwordFieldId = useId();
-
+  const dispatch = useDispatch();
   const FeedbackSchema = Yup.object().shape({
     name: Yup.string()
-      .min(3, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please, add your name"),
+      .min(3, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Please, add your name'),
     email: Yup.string()
-      .email("Please, add your valid email!")
-      .required("Please, add your email"),
+      .email('Please, add your valid email!')
+      .required('Please, add your email'),
     password: Yup.string()
-      .min(7, "Too Short!")
-      .max(18, "Too Long!")
-      .required("Please, add your password"),
+      .min(7, 'Too Short!')
+      .max(18, 'Too Long!')
+      .required('Please, add your password'),
   });
 
   const handleSubmit = (values, actions) => {
@@ -33,7 +32,7 @@ const RegistrationForm = () => {
 
   return (
     <Formik
-      initialValues={{ name: "", email: "", password: "" }}
+      initialValues={{ name: '', email: '', password: '' }}
       onSubmit={handleSubmit}
       validationSchema={FeedbackSchema}
     >
@@ -45,8 +44,7 @@ const RegistrationForm = () => {
               className={s.input}
               type="text"
               name="name"
-              id="name"
-              autoComplete="username"
+              id={nameFieldId}
             />
             <ErrorMessage className={s.error} name="name" component="span" />
           </div>
@@ -56,8 +54,7 @@ const RegistrationForm = () => {
               className={s.input}
               type="email"
               name="email"
-              id="email"
-              autoComplete="email"
+              id={emailFieldId}
             />
             <ErrorMessage className={s.error} name="email" component="span" />
           </div>
@@ -67,8 +64,7 @@ const RegistrationForm = () => {
               className={s.input}
               type="password"
               name="password"
-              id="password"
-              autoComplete="current-password"
+              id={passwordFieldId}
             />
             <ErrorMessage
               className={s.error}

@@ -41,10 +41,10 @@ const ContactForm = () => {
       >
         <Form className={s.form}>
           <label htmlFor={nameId}>Name</label>
-          <Field type="text" name="name" id="name" />
+          <Field type="text" name="name" id={nameId} />
           <ErrorMessage className={s.error} name="name" component="span" />
           <label htmlFor={phoneId}>Number</label>
-          <Field type="number" name="number" id="number" />
+          <Field type="number" name="number" id={phoneId} />
           <ErrorMessage className={s.error} name="number" component="span" />
           <button className={s.button} type="submit">
             Add contact
